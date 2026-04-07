@@ -1,6 +1,6 @@
 import { cart,removeFromCart,cartQuantity } from "../data/cart.js";
 import { products } from "../data/products.js";
-
+import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
 
 const a = dayjs();
 const b = a.add(7,'days');
