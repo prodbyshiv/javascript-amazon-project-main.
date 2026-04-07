@@ -1,6 +1,14 @@
 import { cart,removeFromCart,cartQuantity } from "../data/cart.js";
 import { products } from "../data/products.js";
 
+
+const a = dayjs();
+const b = a.add(7,'days');
+const c = b.format('ddd,MMMM D');
+
+console.log(c);
+
+
 let html = '';
 
 // generate html for each item in the cart
