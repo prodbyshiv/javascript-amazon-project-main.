@@ -1,4 +1,4 @@
-import { cart,removeFromCart } from "../data/cart.js";
+import { cart,removeFromCart,cartQuantity } from "../data/cart.js";
 import { products } from "../data/products.js";
 
 let html = '';
@@ -50,7 +50,7 @@ cart.forEach((cartItem) => {
                 <div class="delivery-option">
                   <input type="radio" checked
                     class="delivery-option-input"
-                    name="delivery-option-1">
+                    name="delivery-option-${matchingProduct.id}">
                   <div>
                     <div class="delivery-option-date">
                       Tuesday, June 21
@@ -63,7 +63,7 @@ cart.forEach((cartItem) => {
                 <div class="delivery-option">
                   <input type="radio"
                     class="delivery-option-input"
-                    name="delivery-option-1">
+                    name="delivery-option-${matchingProduct.id}">
                   <div>
                     <div class="delivery-option-date">
                       Wednesday, June 15
@@ -76,7 +76,7 @@ cart.forEach((cartItem) => {
                 <div class="delivery-option">
                   <input type="radio"
                     class="delivery-option-input"
-                    name="delivery-option-1">
+                    name="delivery-option-${matchingProduct.id}">
                   <div>
                     <div class="delivery-option-date">
                       Monday, June 13
@@ -98,6 +98,7 @@ document.querySelectorAll('.js-delete-quantity-link')
    const productId = link.dataset.productId;
     
     removeFromCart(productId);
+    updateCheckoutItems();
   const deleteElement = document.querySelector(`.js-cart-item-container-${productId}`);
   deleteElement.remove();
   // localStorage.setItem('cart', JSON.stringify(cart));
@@ -105,3 +106,8 @@ document.querySelectorAll('.js-delete-quantity-link')
   })
 })
 
+function updateCheckoutItems(params) {
+  return document.querySelector('.js-return-to-home-link').innerHTML
+ = `${cartQuantity()} items`;
+}
+updateCheckoutItems();

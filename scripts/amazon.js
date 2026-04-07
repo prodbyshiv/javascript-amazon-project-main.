@@ -2,7 +2,7 @@
 import { products } from "../data/products.js";
 import { addToCart,cartQuantity,cart} from "../data/cart.js";
 
-
+ 
 let html = '';
 products.forEach((product)=>{
 
@@ -62,6 +62,7 @@ document.querySelector('.js-product-grid').innerHTML
 = html;
 
             //add to cart functionality//
+cartQuantity();
 
 document.querySelectorAll('.js-add-to-cart-button')
 .forEach((button)=>{
