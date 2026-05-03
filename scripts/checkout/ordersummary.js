@@ -76,11 +76,12 @@ import { renderPaymentSummary } from './paymentsummary.js';
       link.addEventListener('click', () => {
         const productId = link.dataset.productId;
         removeFromCart(productId);
+        renderOrderSummary();
 
-        const container = document.querySelector(
-          `.js-cart-item-container-${productId}`
-        );
-        container.remove();
+        // const container = document.querySelector(
+        //   `.js-cart-item-container-${productId}`
+        // );
+        // container.remove();
         
         renderPaymentSummary();
 
