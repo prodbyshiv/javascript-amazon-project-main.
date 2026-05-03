@@ -2,8 +2,10 @@ import {cart, removeFromCart,updateDeliveryOption} from '../../data/cart.js';
 import {products,getProduct} from '../../data/products.js';
 import {formatCurrency} from '../utils/money.js';
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js'
-import { deliveryOptions,getDeliveryOption } from "../../data/deliveryOptions.js";
+import { deliveryOptions,getDeliveryOption,calculateDeliveryDate } from "../../data/deliveryOptions.js";
 import { renderPaymentSummary } from './paymentsummary.js';
+import { renderCheckoutHeader } from './checkoutHeader.js';
+
 
   export function renderOrderSummary() {
   
@@ -19,12 +21,13 @@ import { renderPaymentSummary } from './paymentsummary.js';
 
     const deliveryOption = getDeliveryOption(deliveryOptionId);
 
-      const today = dayjs();
-      const date = today.add(
-        deliveryOption.deliveryDays,
-        'days'
-      );
-      const dateString = date.format('dddd, MMMM D');
+      // const today = dayjs();
+      // const date = today.add(
+      //   deliveryOption.deliveryDays,
+      //   'days'
+      // );
+      // const dateString = date.format('dddd, MMMM D');
+  const dateString = calculateDeliveryDate(deliveryOption);
     
     cartSummaryHTML += `
       <div class="cart-item-container
@@ -76,6 +79,7 @@ import { renderPaymentSummary } from './paymentsummary.js';
       link.addEventListener('click', () => {
         const productId = link.dataset.productId;
         removeFromCart(productId);
+        renderCheckoutHeader();
         renderOrderSummary();
 
         // const container = document.querySelector(
@@ -92,14 +96,16 @@ import { renderPaymentSummary } from './paymentsummary.js';
     let html  = '';
 
     deliveryOptions.forEach((deliveryOption)=>{
-      const today = dayjs();
 
-      const date = today.add(
-        deliveryOption.deliveryDays,
-        'days'
-      );
+      // const today = dayjs();
 
-      const dateString = date.format('dddd, MMMM D');
+      // const date = today.add(
+      //   deliveryOption.deliveryDays,
+      //   'days'
+      // );
+
+      // const dateString = date.format('dddd, MMMM D');
+      const dateString = calculateDeliveryDate(deliveryOption);
 
       const priceString = deliveryOption.priceCents === 0 
         ? 'FREE'
