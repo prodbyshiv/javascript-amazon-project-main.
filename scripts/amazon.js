@@ -1,4 +1,4 @@
-import {cart, addToCart} from '../data/cart.js';
+import {cart, addToCart,saveToStorage} from '../data/cart.js';
 import {products} from '../data/products.js';
 import {formatCurrency} from './utils/money.js';
 
@@ -43,6 +43,8 @@ products.forEach((product) => {
         </select>
       </div>
 
+      ${product.extraInfoHTML()}
+
       <div class="product-spacer"></div>
 
       <div class="added-to-cart">
@@ -69,6 +71,7 @@ function updateCartQuantity() {
 
   document.querySelector('.js-cart-quantity')
     .innerHTML = cartQuantity;
+    saveToStorage();
 }
 
 document.querySelectorAll('.js-add-to-cart')
@@ -79,3 +82,5 @@ document.querySelectorAll('.js-add-to-cart')
       updateCartQuantity();
     });
   });
+
+updateCartQuantity();

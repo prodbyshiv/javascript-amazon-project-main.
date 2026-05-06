@@ -42,6 +42,7 @@ describe('test suite: renderOrderSummary',()=>{
         `
         <div class =" js-order-summary"></div>
         <div class = "js-payment-summary"></div>
+        <div class="checkout-header js-checkout-header"></div>
         `;
         const productId1 = 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6';
         const productId2 = '15b6fc6f-327a-4ec4-896f-486349e85a3d';
@@ -62,5 +63,13 @@ describe('test suite: renderOrderSummary',()=>{
                 renderOrderSummary();
 
                 document.querySelector(`.js-delete-link-${productId1}`).click();
+
+                expect(
+                    document.querySelectorAll('.js-cart-item-container').length
+                ).toEqual(1);
+
+                expect(
+                    document.querySelector(`.js-cart-item-container-${productId1}`)
+                ).toEqual(null);
     });
 });
