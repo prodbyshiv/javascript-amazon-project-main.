@@ -73,11 +73,44 @@ export function getProduct(productId) {
 
 export let products = [];
 
+ export function loadProductsFetch(){
+  // fetch will by default make a get request. so just give it url
+  // we get resposne here by using promise.
+  // when we call fetch() it will create a promise
+  // generates an get req-> when gets a response->it goes to then->also saves te response inside then();
+  
+  
+const promise = fetch('https://supersimplebackend.dev/products')
+.then((response)=>{
+
+  return  response.json();
+    // response.JSON() is asynchronus it returns a promise
+
+    
+  }).then((productsData)=>{
+     products = productsData.map((productDetails)=>{
+      if (productDetails.type === 'clothing') {
+        return new Clothing (productDetails);
+        
+      }
+
+      return new Product(productDetails);
+      });
+      console.log('load products');
+  })
+  return promise;
+}
+/*
+loadProductsFetch().then(()=>{
+
+});
+*/
+
 export function loadProducts(fun) {
  const xhr = new XMLHttpRequest(); // generate a new req object
 
   xhr.addEventListener('load',()=>{
-    
+    //here we are using a callback to get a response
   products = JSON.parse(xhr.response).map((productDetails)=>{
       if (productDetails.type === 'clothing') {
         return new Clothing (productDetails);
