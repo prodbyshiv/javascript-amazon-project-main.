@@ -69,3 +69,9 @@ try{
 
     we can not create an manual error in the future using throw
     reject();
+
+    to send data in a request we need to use a different type of request
+    GET = get something from backend
+    POST = create something 
+    PUT = update something
+    DELETE = delte something
