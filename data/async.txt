@@ -1,1 +1,71 @@
 async makes a function return a promise
+
+error handling 
+// when we are sending http requests,
+we could get unexpected errors.
+
+export function loadProducts(fun) {
+ const xhr = new XMLHttpRequest(); // generate a new req object
+
+  xhr.addEventListener('load',()=>{
+    //here we are using a callback to get a response
+  products = JSON.parse(xhr.response).map((productDetails)=>{
+      if (productDetails.type === 'clothing') {
+        return new Clothing (productDetails);
+        
+      }
+
+      return new Product(productDetails);
+      });
+      console.log('load products');
+
+      fun();
+      
+  })
+}
+we use call backs here 
+what would happen if there is an error along the path?
+
+how to handle errors in promises.
+
+.catch(errors)
+
+
+how to handle errors in async and await we use try catch();
+
+try{
+
+    //PUT THE CODE THAT CAN CAUSE AN ERROR INSIDE TRY 
+        await loadProductsFetch(); 
+
+    const value = await new Promise((resolve)=>{ // then what is this create a new promise-->loadthecart-->resolve to tell that promise is finished. so why not fetch here?
+            loadCart(()=>{
+                resolve('values2'); // this value is saved in the next step,however if we use await this value get return
+            });
+        });
+    } catch(error){
+
+    }
+
+    agar isme catch hua to catch(error) and run the code inside catch error
+    more details about try/catch 
+
+    we can use try/catch with synchronus code not nececsary asynchronus 
+
+    try{
+        doesnotexist(); suppose we get an error here 
+        console.log('it will not run this line');
+    } catch(error){
+
+    }
+
+    so why don't we use try/catch everywhere
+    -it's meant to handle unexpected error;
+    (means code is correct, outside our control error);
+
+
+    we can manually create an error
+    throw 'error1';
+
+    we can not create an manual error in the future using throw
+    reject();

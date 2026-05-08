@@ -19,13 +19,25 @@ import { loadCart } from "../data/cart.js";
 
 async function loadPage() {
 
-   await loadProductsFetch(); 
+    try{
 
-const value = await new Promise((resolve)=>{ // then what is this create a new promise-->loadthecart-->resolve to tell that promise is finished. so why not fetch here?
+        // throw 'error1';
+        
+
+        await loadProductsFetch(); 
+
+    const value = await new Promise((resolve, reject)=>{ // then what is this create a new promise-->loadthecart-->resolve to tell that promise is finished. so why not fetch here?
+            
             loadCart(()=>{
+                // reject('error3');
                 resolve('values2'); // this value is saved in the next step,however if we use await this value get return
             });
-        })
+        });
+
+    } catch(error){
+        console.log('unexpected eeeeerror.please try 100 times');
+    }
+   
 
         renderCheckoutHeader();
         renderOrderSummary();

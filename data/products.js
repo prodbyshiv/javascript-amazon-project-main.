@@ -97,9 +97,16 @@ const promise = fetch('https://supersimplebackend.dev/products')
       return new Product(productDetails);
       });
       console.log('load products');
+
   })
+  
+  .catch((error)=>{
+    console.log('unexpected error.please try 100 times');
+  })
+  
   return promise;
 }
+
 /*
 loadProductsFetch().then(()=>{
 
@@ -121,15 +128,20 @@ export function loadProducts(fun) {
       });
       console.log('load products');
 
-      fun();
+      // fun();
       
+  });
+  xhr.addEventListener('error',()=>{
+    console.log('unexpected error.please try 100 times');
+    
   })
 
  xhr.open('GET','https://supersimplebackend.dev/products');
  xhr.send();
+
 }
 
-
+loadProducts();
 
 
 // export const products = [
