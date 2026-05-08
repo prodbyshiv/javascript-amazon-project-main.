@@ -8,20 +8,36 @@ import { loadCart } from "../data/cart.js";
 
 // import '../data/backend-practice.js'
 // promise.all let us run multiple promises at the same time.
-   
-async function loadPage() {
-    console.log('load pahge');
-}
 
-loadPage().then(()=>{
-    console.log('next step');
-    
-})
+//async makes a function return a promise
+// if we return something in async like return 'value2' it will become resolve('value2')
+// so y do we use async because it lets us use await.
+// await: let us wait for a promise to finish before going to the nect line.
+// instead of using .then() we can just add  //await loadProductsFetch();// it wll wait for loadProductsFetch to finsih then 
+// we can onlu use await when we are inside an await function.
+// async await doesnot works with callbacks.
+
+async function loadPage() {
+
+   await loadProductsFetch(); 
+
+const value = await new Promise((resolve)=>{ // then what is this create a new promise-->loadthecart-->resolve to tell that promise is finished. so why not fetch here?
+            loadCart(()=>{
+                resolve('values2'); // this value is saved in the next step,however if we use await this value get return
+            });
+        })
+
+        renderCheckoutHeader();
+        renderOrderSummary();
+        renderPaymentSummary();
+}
+loadPage();
+/*
 
 Promise.all([
-        loadProductsFetch(),
+        loadProductsFetch(), //here fetch return the products from backend so we get the products array
 
-        new Promise((resolve)=>{
+        new Promise((resolve)=>{ // then what is this create a new promise-->loadthecart-->resolve to tell that promise is finished. so why not fetch here?
             loadCart(()=>{
                 resolve('values2');
             });
@@ -59,7 +75,7 @@ Promise.all([
         renderOrderSummary();
         renderPaymentSummary();
     });
-
+*/
 
 // we can also give resolve a value;
 
@@ -78,7 +94,7 @@ Promise.all([
     
 // });
 
-*/
+
 
 
 
