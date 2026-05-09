@@ -80,6 +80,16 @@ export function loadCart(fun) {
   xhr.addEventListener('load',()=>{
     
     console.log(xhr.response);
+    // Save the fetched cart to localStorage so it persists across sessions
+    try {
+      const fetchedCart = JSON.parse(xhr.response);
+      if (Array.isArray(fetchedCart) && fetchedCart.length > 0) {
+        cart = fetchedCart;
+        saveToStorage();
+      }
+    } catch(e) {
+      console.log('Could not parse cart from backend');
+    }
     fun();
       
   })
