@@ -74,28 +74,36 @@ export function updateDeliveryOption(productId, deliveryOption){
       saveToStorage();
 }
 
-export function loadCart(fun) {
- const xhr = new XMLHttpRequest(); // generate a new req object
+// export function loadCart(fun) {
+//  const xhr = new XMLHttpRequest(); // generate a new req object
 
-  xhr.addEventListener('load',()=>{
+//   xhr.addEventListener('load',()=>{
     
-    console.log(xhr.response);
-    // Save the fetched cart to localStorage so it persists across sessions
-    try {
-      const fetchedCart = JSON.parse(xhr.response);
-      if (Array.isArray(fetchedCart) && fetchedCart.length > 0) {
-        cart = fetchedCart;
-        saveToStorage();
-      }
-    } catch(e) {
-      console.log('Could not parse cart from backend');
-    }
-    fun();
+//     console.log(xhr.response);
+//     // Save the fetched cart to localStorage so it persists across sessions
+//     try {
+//       const fetchedCart = JSON.parse(xhr.response);
+//       if (Array.isArray(fetchedCart) && fetchedCart.length > 0) {
+//         cart = fetchedCart;
+//         saveToStorage();
+//       }
+//     } catch(error) {
+//       console.log('Could not parse cart from backend');
+//     }
+//     fun();
       
-  })
+//   })
 
- xhr.open('GET','https://supersimplebackend.dev/cart');
- xhr.send();
+//  xhr.open('GET','https://supersimplebackend.dev/cart');
+//  xhr.send();
 
  
+// }
+
+
+export async function loadCartFetch() {
+  const response = await fetch('https://supersimplebackend.dev/cart');
+  const text = await response.text();
+  console.log(text);
+  return text;
 }

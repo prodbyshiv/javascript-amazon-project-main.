@@ -1,8 +1,8 @@
 import { renderOrderSummary } from "./checkout/ordersummary.js";
 import { renderPaymentSummary } from "./checkout/paymentsummary.js";
 import { renderCheckoutHeader } from "./checkout/checkoutHeader.js";
-import { loadProducts,loadProductsFetch } from "../data/products.js";
-import { loadCart } from "../data/cart.js";
+import { loadProductsFetch } from "../data/products.js";
+import { loadCartFetch } from "../data/cart.js";
 
 // import '../data/cart-class.js'
 
@@ -20,28 +20,18 @@ import { loadCart } from "../data/cart.js";
 async function loadPage() {
 
     try{
-
-        // throw 'error1';
-        
-
-        await loadProductsFetch(); 
-
-    const value = await new Promise((resolve, reject)=>{ // then what is this create a new promise-->loadthecart-->resolve to tell that promise is finished. so why not fetch here?
-            
-            loadCart(()=>{
-                // reject('error3');
-                resolve('values2'); // this value is saved in the next step,however if we use await this value get return
-            });
-        });
+        await Promise.all([
+            loadProductsFetch(),
+            loadCartFetch()
+        ]);
 
     } catch(error){
         console.log('unexpected eeeeerror.please try 100 times');
     }
-   
 
-        renderCheckoutHeader();
-        renderOrderSummary();
-        renderPaymentSummary();
+    renderCheckoutHeader();
+    renderOrderSummary();
+    renderPaymentSummary();
 }
 loadPage();
 /*
@@ -108,6 +98,6 @@ Promise.all([
 
 
 
-
+// loadCartFetch();
 
 

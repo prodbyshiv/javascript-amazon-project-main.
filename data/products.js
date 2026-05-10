@@ -73,39 +73,37 @@ export function getProduct(productId) {
 
 export let products = [];
 
- export function loadProductsFetch(){
-  // fetch will by default make a get request. so just give it url
-  // we get resposne here by using promise.
-  // when we call fetch() it will create a promise
-  // generates an get req-> when gets a response->it goes to then->also saves te response inside then();
-  
-  
-const promise = fetch('https://supersimplebackend.dev/products')
-.then((response)=>{
+export async function loadProductsFetch(fun=() => {})  {
 
-  return  response.json();
-    // response.JSON() is asynchronus it returns a promise
+  try {
+    const response = await fetch('https://supersimplebackend.dev/products');
+    
+    // Check for HTTP errors
+    if (response.status >= 400) {
+      throw new Error('Failed to load products');
+    }
+    
+    const productsData = await response.json();
+    
+    // Map the data to Product/Clothing objects
+    products = productsData.map((productDetails) => {
+      if (productDetails.type === 'clothing') {
+        return new Clothing(productDetails);
+      }
+      return new Product(productDetails);
+    });
+    fun();
 
     
-  }).then((productsData)=>{
-     products = productsData.map((productDetails)=>{
-      if (productDetails.type === 'clothing') {
-        return new Clothing (productDetails);
-        
-      }
-
-      return new Product(productDetails);
-      });
-      console.log('load products');
-
-  })
-  
-  .catch((error)=>{
-    console.log('unexpected error.please try 100 times');
-  })
-  
-  return promise;
+    
+    console.log('load products');
+    
+  } catch(error) {
+    console.log('Unexpected error. Please try again later.');
+  }
 }
+  
+
 
 /*
 loadProductsFetch().then(()=>{
@@ -113,35 +111,35 @@ loadProductsFetch().then(()=>{
 });
 */
 
-export function loadProducts(fun) {
- const xhr = new XMLHttpRequest(); // generate a new req object
+// export function loadProducts(fun) {
+//  const xhr = new XMLHttpRequest(); // generate a new req object
 
-  xhr.addEventListener('load',()=>{
-    //here we are using a callback to get a response
-  products = JSON.parse(xhr.response).map((productDetails)=>{
-      if (productDetails.type === 'clothing') {
-        return new Clothing (productDetails);
+//   xhr.addEventListener('load',()=>{
+//     //here we are using a callback to get a response
+//   products = JSON.parse(xhr.response).map((productDetails)=>{
+//       if (productDetails.type === 'clothing') {
+//         return new Clothing (productDetails);
         
-      }
+//       }
 
-      return new Product(productDetails);
-      });
-      console.log('load products');
+//       return new Product(productDetails);
+//       });
+//       console.log('load products');
 
-      fun();
+//       fun();
       
-  });
-  xhr.addEventListener('error',()=>{
-    console.log('unexpected error.please try 100 times');
+//   });
+//   xhr.addEventListener('error',()=>{
+//     console.log('unexpected error.please try 100 times');
     
-  })
+//   })
 
- xhr.open('GET','https://supersimplebackend.dev/products');
- xhr.send();
+//  xhr.open('GET','https://supersimplebackend.dev/products');
+//  xhr.send();
 
-}
+// }
 
-loadProducts();
+// loadProducts();
 
 
 // export const products = [
