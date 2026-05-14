@@ -11,7 +11,8 @@ class Product {
     this.image = productDeatils.image;
     this.name = productDeatils.name;
     this.rating = productDeatils.rating
-    this.priceCents = productDeatils.priceCents
+    this.priceCents = productDeatils.priceCents;
+    this.keywords = productDeatils.keywords || [];
   }
 
   getStarsUrl(){
